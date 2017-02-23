@@ -1,0 +1,14 @@
+{
+    "name": "efichot/website",
+    "authors": [
+        {
+            "name": "Etienne Fichot",
+            "email": "fichotetienne@gmail.com"
+        }
+    ],
+    "require": {
+        "monolog/monolog": "^1.22",
+        "slim/slim": "2.6",
+        "twig/twig": "^1.31"
+    }
+}
