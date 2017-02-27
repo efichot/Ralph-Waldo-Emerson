@@ -13,6 +13,8 @@ date_default_timezone_set("Europe/Paris");
 $app = new \Slim\Slim([
     "view" => new \Slim\Views\Twig()
 ]);
+//Enable Middleware session cookie for flash messages
+$app->add(new \Slim\Middleware\SessionCookie());
 
 //debug
 $view = $app->view();
@@ -20,7 +22,8 @@ $view->parserOptions = [
     "debug" => true
 ];
 $view->parserExtensions = [
-    new \Slim\Views\TwigExtension()
+    new \Slim\Views\TwigExtension(),
+    new \Twig_Extension_Debug()
 ];
 
 //get routes
@@ -40,6 +43,8 @@ $app->post("/contact", function() use($app) {
 
     if (!$name || !$email || !$msg)
     {
+        //initiate flash message
+        $app->flash("fail", "Don't late a single field empty.");
         //Redirect the user
         $app->redirect("/contact");
     }
@@ -64,13 +69,16 @@ $app->post("/contact", function() use($app) {
     //send the object $message
     if ($result = $mailer->send($message))
     {
-        //message send thx
+        //initiate flash message
+        $app->flash("success", "Thanks for your message.");
         $app->redirect("/");
     }
     else
     {
         //failed
         //log that there an error
+        //initiate flash message
+        $app->flash("fail", "Something went wrong, please try again later.");
         $app->redirect("/contact");
     }
     /*
