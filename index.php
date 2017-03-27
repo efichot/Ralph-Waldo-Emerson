@@ -1,6 +1,6 @@
 <?php
 //require composer
-require("vendor/autoload.php");
+require_once("vendor/autoload.php");
 date_default_timezone_set("Europe/Paris");
 // use Monolog\Logger;
 // use Monolog\Handler\StreamHandler;
